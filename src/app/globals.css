@@ -1,0 +1,14 @@
+:root {
+    --bg: #0dc0c22;
+    --text: white;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
