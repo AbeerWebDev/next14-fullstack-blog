@@ -1,14 +1,14 @@
 import Links from "./links/Links"
-
+import styles from './navbar.module.css'
 const Navbar = () => {
   return (
-    <div>
-      <div>AbeerWebDev</div>
+    <div className={styles.container}>
+      <div className={styles.logo}>AbeerWebDev</div>
       <div>
-        <Links/>
+        <Links />
       </div>
     </div>
-  )
+  );
 }
 
 export default Navbar
