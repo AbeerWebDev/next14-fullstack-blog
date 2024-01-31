@@ -1,4 +1,4 @@
-import styles from './home.module.css'
+import styles from './home.module.css';
 import Image from 'next/image';
 
 const HomePage = () => {
@@ -8,12 +8,12 @@ const HomePage = () => {
         <h1>Creative Thoughts Agency.</h1>
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit..</p>
         <div className={styles.buttons}>
-          <button className={styles.buttons}>Learn More</button>
-          <button className={styles.buttons}>Contact</button>
+          <button className={styles.button}>Learn More</button>
+          <button className={styles.button}>Contact</button>
         </div>
         <div className={styles.brands}>
           <Image
-            src="https://images.pexels.com/photos/13417078/pexels-photo-13417078.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src="/brands.png"
             alt=""
             fill
             className={styles.brandImg}
