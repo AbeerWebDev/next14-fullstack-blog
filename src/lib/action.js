@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { ConnectToDb } from "./utils"
 import { Post } from "./models"
+import { signIn, signOut } from "./auth"
 
 export const createPost = async(formData) => {
     const { title, desc, slug, userId } = Object.fromEntries(formData)
@@ -35,3 +36,11 @@ export const deletePost = async (formData) => {
         console.log(error)
     }
 }
+
+export const handleGithubLogin = async () => {
+  await signIn("github");
+};
+
+export const handleLogout = async () => {
+  await signOut();
+};
