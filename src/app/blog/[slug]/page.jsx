@@ -4,13 +4,24 @@ import PostUser from '@/components/postUser/PostUser'
 import { Suspense } from 'react'
 import { getPost } from '@/lib/data'
 
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params;
+
+  const post = await getPost(slug);
+
+  return {
+    title: post?.title,
+    description: post?.desc,
+  };
+};
+
 const SingleBlogPage = async ({params}) => {
   const { slug } = params
   const post = await getPost(slug)
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
-       {post.img && 
+       {post?.img && 
        <Image
           src={post.img}
           alt=''
@@ -29,7 +40,7 @@ const SingleBlogPage = async ({params}) => {
         }
         <div className={styles.detailText}>
           <p className={styles.detailTitle}>Published</p>
-          <p className={styles.detailValue}>{post.createdAt.toString().slice(4,16)}</p>
+          <p className={styles.detailValue}>{post?.createdAt.toString().slice(4,16)}</p>
         </div>
       </div>
         <div className={styles.content}>
