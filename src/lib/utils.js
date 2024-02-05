@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const connection = {}
+
 export const ConnectToDb = async () => {
     try {
         if (connection.isConnected) {
