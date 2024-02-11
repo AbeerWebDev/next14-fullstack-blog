@@ -5,38 +5,72 @@ import { Post, User } from "./models"
 import { signIn, signOut } from "./auth"
 import bcrypt from 'bcryptjs'
 
-export const createPost = async(formData) => {
-    const { title, desc, slug, userId } = Object.fromEntries(formData)
+export const createPost = async (prevState, formData) => {
+  const { title, desc, slug, userId, img } = Object.fromEntries(formData);
+  try {
+    ConnectToDb();
+    const post = new Post({
+      title,
+      desc,
+      slug,
+      userId,
+      img
+    });
+    await post.save();
+    console.log("post saved");
 
-    try {
-        ConnectToDb()
-        const post = new Post({
-            title,
-            desc,
-            slug,
-            userId
-        })
-        await post.save()
-        console.log('post saved');
-
-        revalidatePath('/blog')
-    } catch (error) {
-        return {error: 'error saving to db'}
-    }
-}
+    revalidatePath("/blog");
+    revalidatePath("/admin");
+  } catch (error) {
+    return { error: "error saving to db" };
+  }
+};
 
 export const deletePost = async (formData) => {
-   const { id } = Object.fromEntries(formData)
+    const { id } = Object.fromEntries(formData)
 
     try {
         ConnectToDb()
         await Post.findByIdAndDelete(id)
         console.log('post deleted');
         revalidatePath('/blog')
+        revalidatePath('/admin')
     } catch (error) {
         return {error: 'error deleting from db'}
     }
 }
+export const createUser = async (prevState, formData) => {
+  const { username, email, password, img } = Object.fromEntries(formData);
+
+  try {
+    ConnectToDb();
+    const newUser = new User({
+      username,
+      email,
+      password,
+      img,
+    });
+    await newUser.save();
+    console.log("user saved");
+    revalidatePath("/admin");
+  } catch (error) {
+    return { error: "error saving to db" };
+  }
+};
+
+export const deleteUser = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    ConnectToDb();
+    await Post.deleteMany({ userId: id });
+    await User.findByIdAndDelete(id);
+    console.log("User deleted");
+    revalidatePath("/admin");
+  } catch (error) {
+    return { error: "error deleting from db" };
+  }
+};
 
 export const handleGithubLogin = async () => {
   await signIn("github");
